@@ -1,0 +1,32 @@
+{
+    "name": "html-import-partials",
+    "version": "1.0.0",
+    "description": "Easily build a static html file by including html partials",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/feliperrego/html-import-partials.git"
+    },
+    "keywords": [
+        "static",
+        "html",
+        "compile",
+        "concat",
+        "include",
+        "import",
+        "partials",
+        "replace",
+        "build",
+        "web"
+    ],
+    "author": "Felipe Rêgo",
+    "license": "MIT",
+    "homepage": "https://github.com/feliperrego/html-import-partials#readme",
+    "bin": {
+        "html-import-partials": "./index.js"
+    },
+    "dependencies": {
+        "commander": "^2.9.0",
+        "node-watch": "^0.5.7"
+    }
+}
