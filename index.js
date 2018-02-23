@@ -10,6 +10,7 @@ const watch = require('node-watch');
 const openTag = '<include';
 
 var program = require('commander');
+var partials_tree = [];
 
 program
 .version(pkg.version, '-v, --version')
@@ -29,9 +30,19 @@ if (!program.args || !program.args.length){
 }
 
 if (program.watch) {
-    watch(program.args, { recursive: true }, function(evt, file) {
-        console.log('%s changed.', file);
-        parsePartials(file);
+    watch(path.dirname(program.args[0]), { recursive: true }, function(e, file) {
+        var changed_files = partials_tree.filter(function(e){ return e.partials.includes(file) });
+
+        if (changed_files.length) {
+            changed_files.map(function(el) {
+                console.log('%s changed.', el.file);
+                parsePartials(el.file);
+            });
+        } else {
+            console.log('%s changed.', file);
+            parsePartials(file);
+        }
+
     });
 }
 
@@ -47,7 +58,7 @@ function init(files) {
             console.error("The input file could not be found.");
             process.exit(1);
         }
-
+        partials_tree.push({file: file, partials: []});
         parsePartials(file);
     })
 }
@@ -72,6 +83,11 @@ function parsePartials(file) {
             if (!path.isAbsolute(src)) {
                 src = path.normalize(filepath + '/' + src);
             }
+
+            partials_tree
+                .find(function(e){ return e.file==file })
+                .partials.push(src);
+
             if (fs.existsSync(src) && src !== file) {
                 partial_contents = fs.readFileSync(src).toString();
             }

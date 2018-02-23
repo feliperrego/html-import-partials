@@ -1,6 +1,6 @@
 {
     "name": "html-import-partials",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Easily build a static html file by including html partials",
     "main": "index.js",
     "repository": {
